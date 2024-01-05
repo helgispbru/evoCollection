@@ -287,7 +287,7 @@ $url .= '&sorter=c.' . $cf[$f]['caption'];
     $tbl .= '<td width="' . $width . '">' . $caption . '</td>';
 }
 
-$tbl .= '<th width="1%"></th><th><input type="checkbox"  id="checkall" ></th></tr></thead><tbody>';
+$tbl .= '<th width="1%"></th><th><input type="checkbox" id="checkall" ></th></tr></thead><tbody>';
 
 $res = $modx->db->query($sql);
 $arr = $modx->db->makeArray($res);
@@ -469,7 +469,7 @@ manager_url = "' . $modx->config['site_manager_url'] . '";
 how_click = "' . $config[$idc]['how_edit'] . '";
 new_doc = "' . $config[$idc]['new_doc'] . '";
 </script>
-<script src="/assets/plugins/evocollection/js/evocollection.js?v=1.0a" type="text/javascript"></script>
+<script src="/assets/plugins/evocollection/js/evocollection.js?v=1.0b" type="text/javascript"></script>
 <script src="/assets/plugins/tinymce4/tinymce/tinymce.min.js"></script>';
 
 $e->output($output);
