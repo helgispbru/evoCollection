@@ -472,4 +472,4 @@ new_doc = "' . $config[$idc]['new_doc'] . '";
 <script src="/assets/plugins/evocollection/js/evocollection.js?v=1.0b" type="text/javascript"></script>
 <script src="/assets/plugins/tinymce4/tinymce/tinymce.min.js"></script>';
 
-$e->output($output);
+$modx->event->output($output);
