@@ -202,7 +202,6 @@ $tv_join = array();
 $c_fields = array();
 $ff = array();
 foreach ($array as $key => $val) {
-
     if (!empty($cf[$val]['table']) == 'tv') {
         $tv_fields[] = "tv" . $key . ".value as '" . $val . "'";
         $tv_join[] = "LEFT JOIN " . $modx->getFullTableName('site_tmplvar_contentvalues') . " as tv" . $key . " ON c.id = tv" . $key . ".contentId and tv" . $key . ".tmplvarid = " . $cf[$val]['tmplvarid'];
@@ -434,6 +433,7 @@ if ($pages > 1) {
     $output .= '<div class="row">
 <div class="row-col col-lg-12 col-12">
 <div id="pagination" style="text-align:center;"><ul>';
+
     for ($i = 1; $i <= $pages; $i++) {
         $url = $modx->config['site_manager_url'] . '?a=' . $_GET['a'] . '&id=' . $_GET['id'];
         if (!empty($_GET['show'])) {
@@ -454,10 +454,10 @@ if ($pages > 1) {
 }
 $output .= '</div>';
 
-$template = $modx->db->getValue('SELECT template FROM ' . $modx->getFullTableName('site_content') . ' WHERE parent=' . $_GET['id']);
-
-if (!$template) {
+if ($configuration[$idc]['template_default']) {
     $template = $configuration[$idc]['template_default'];
+} else {
+    $template = $modx->db->getValue('SELECT template FROM ' . $modx->getFullTableName('site_content') . ' WHERE parent=' . $_GET['id']);
 }
 
 $output .= '<div id="popup_rich"><div id="close"><i class="fa fa-close"></i></div><h2>Редактирование содержимого</h2>
