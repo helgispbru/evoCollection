@@ -457,7 +457,7 @@ $output .= '</div>';
 $template = $modx->db->getValue('SELECT template FROM ' . $modx->getFullTableName('site_content') . ' WHERE parent=' . $_GET['id']);
 
 if (!$template) {
-    $template = $default_template;
+    $template = $configuration[$idc]['template_default'];
 }
 
 $output .= '<div id="popup_rich"><div id="close"><i class="fa fa-close"></i></div><h2>Редактирование содержимого</h2>
