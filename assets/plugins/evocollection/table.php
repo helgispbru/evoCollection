@@ -118,8 +118,10 @@ if ($configuration[$idc]['limit']) {
     $limit = 10;
 }
 
+$l = '';
+
 if (!empty($_GET['show'])) {
-    if ($_GET['show'] != 'all') {
+    if ($_GET['show'] != 'all' && !empty($_GET['page'])) {
         $start = ($_GET['page'] - 1) * $limit;
         if ($_GET['page']) {
             $l = 'LIMIT ' . $start . ', ' . $_GET['show'];
@@ -448,7 +450,7 @@ if ($pages > 1) {
             $url .= '&search=' . $_GET['search'];
         }
 
-        $output .= '<li><a href="' . $url . '&page=' . $i . '">' . $i . '</a></li>';
+        $output .= '<li' . (!empty($_GET['page']) && $i == $_GET['page'] ? ' class="currentPage"' : '') . '><a href="' . $url . '&page=' . $i . '" >' . $i . '</a></li>';
     }
     $output .= '</ul></div></div></div>';
 }
