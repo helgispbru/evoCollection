@@ -391,7 +391,7 @@ $output .= '
 
     <div class="row mb-2">
         <div class="row-col col-lg-12 col-12 text-right">
-            <input type="text" name="search" id="search" placeholder="поиск по названию" value="' . (!empty($_GET['search']) ?? '') . '" style="width: 250px;" />
+            <input type="text" name="search" id="search" placeholder="поиск по названию" value="' . ($_GET['search'] ?? '') . '" style="width: 250px;" />
 
             <select name="show" id="show" style="width:150px;">
                 <option value="">Показывать по</option>
@@ -471,7 +471,7 @@ manager_url = "' . $modx->config['site_manager_url'] . '";
 how_click = "' . $config[$idc]['how_edit'] . '";
 new_doc = "' . $config[$idc]['new_doc'] . '";
 </script>
-<script src="/assets/plugins/evocollection/js/evocollection.js?v=1.0b" type="text/javascript"></script>
+<script src="/assets/plugins/evocollection/js/evocollection.js?v=1.0ba" type="text/javascript"></script>
 <script src="/assets/plugins/tinymce4/tinymce/tinymce.min.js"></script>';
 
 $modx->event->output($output);

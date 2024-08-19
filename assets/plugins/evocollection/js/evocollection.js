@@ -64,6 +64,7 @@ function SetUrl(url, width, height, alt) {
 function act() {
     var url = manager_url + '?a=' + $_GET('a') + '&id=' + $_GET('id');
 
+    if (jQuery("#search").val() != "") url = url + "&search=" + jQuery("#search").val();
     if (jQuery("#show").val() != "") url = url + "&show=" + jQuery("#show").val();
     if (jQuery("#act").val() != "") url = url + "&act=" + jQuery("#act").val();
 
