@@ -32,17 +32,19 @@ switch ($_REQUEST['q']) {
         }
 
         if ($_POST['table'] == 'content') {
-            echo $modx->db->getValue('Select ' . $modx->db->escape($_POST['field']) . ' from ' . $modx->getFullTableName('site_content') . ' where id=' . $modx->db->escape($_POST['id']));
+            echo $modx->db->getValue('SELECT ' . $modx->db->escape($_POST['field']) . ' FROM ' . $modx->getFullTableName('site_content') . ' WHERE id=' . $modx->db->escape($_POST['id']));
         } else {
-            $idtv = $modx->db->getValue('Select `id` from ' . $modx->getFullTableName('site_tmplvars') . ' where name="' . $_POST['field'] . '"');
-            echo $modx->db->getValue('Select `value` from ' . $modx->getFullTableName('site_tmplvar_contentvalues') . ' where contentid=' . $_POST[id] . ' and `tmplvarid`=' . $idtv);
+            $idtv = $modx->db->getValue('SELECT `id` FROM ' . $modx->getFullTableName('site_tmplvars') . ' WHERE name="' . $_POST['field'] . '"');
+            echo $modx->db->getValue('SELECT `value` FROM ' . $modx->getFullTableName('site_tmplvar_contentvalues') . ' WHERE contentid=' . $_POST[id] . ' AND `tmplvarid`=' . $idtv);
         }
         exit();
         break;
 
     // ?? забыл зачем это
     case 'getnewdoc':
-        if (!isset($_SESSION['mgrValidated'])) {die();}
+        if (!isset($_SESSION['mgrValidated'])) {
+            die();
+        }
         $doc = array(
             'type' => 'document',
             'contentType' => 'text/html',
@@ -100,14 +102,14 @@ switch ($_REQUEST['q']) {
 
         // Работаем с поялями документа
         if ($_POST['table'] == 'content') {
-            $modx->db->query('Update ' . $modx->getFullTableName('site_content') . ' set ' . $modx->db->escape($_POST['field']) . '="' . $modx->db->escape($val) . '" where id=' . $modx->db->escape($_POST['id']));
+            $modx->db->query('Update ' . $modx->getFullTableName('site_content') . ' set ' . $modx->db->escape($_POST['field']) . '="' . $modx->db->escape($val) . '" WHERE id=' . $modx->db->escape($_POST['id']));
         }
 
         // Работаем с ТВ-кой
         if ($_POST['table'] == 'tv') {
-            $idtv = $modx->db->getValue('Select `id` from ' . $modx->getFullTableName('site_tmplvars') . ' where name="' . $modx->db->escape($_POST['field']) . '"');
-            if ($modx->db->getValue('Select count(*) from ' . $modx->getFullTableName('site_tmplvar_contentvalues') . ' where contentid=' . $modx->db->escape($_POST['id']) . ' and `tmplvarid`=' . $idtv)) {
-                $modx->db->query('Update ' . $modx->getFullTableName('site_tmplvar_contentvalues') . ' set value="' . $modx->db->escape($val) . '" where contentid=' . $modx->db->escape($_POST[id]) . ' and `tmplvarid`=' . $modx->db->escape($idtv));
+            $idtv = $modx->db->getValue('SELECT `id` FROM ' . $modx->getFullTableName('site_tmplvars') . ' WHERE name="' . $modx->db->escape($_POST['field']) . '"');
+            if ($modx->db->getValue('SELECT count(*) FROM ' . $modx->getFullTableName('site_tmplvar_contentvalues') . ' WHERE contentid=' . $modx->db->escape($_POST['id']) . ' AND `tmplvarid`=' . $idtv)) {
+                $modx->db->query('Update ' . $modx->getFullTableName('site_tmplvar_contentvalues') . ' set value="' . $modx->db->escape($val) . '" WHERE contentid=' . $modx->db->escape($_POST[id]) . ' AND `tmplvarid`=' . $modx->db->escape($idtv));
             } else {
                 $modx->db->insert(array('contentid' => $modx->db->escape($_POST['id']), 'tmplvarid' => $modx->db->escape($idtv), 'value' => $modx->db->escape($val)), $modx->getFullTableName('site_tmplvar_contentvalues'));
             }

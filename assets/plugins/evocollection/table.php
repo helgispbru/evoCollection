@@ -143,7 +143,7 @@ if (!empty($_GET['show'])) {
 }
 
 $prefix = $modx->db->config['table_prefix'];
-$lng = include MODX_BASE_PATH . MGR_DIR . '/includes/lang/' . $modx->config['manager_language'] . '.inc.php';
+$lng = include_once MODX_BASE_PATH . MGR_DIR . '/includes/lang/' . $modx->config['manager_language'] . '.inc.php';
 
 $res = $modx->db->query('SELECT `column_name`,`column_type` FROM INFORMATION_SCHEMA.Columns WHERE table_name = "' . $prefix . 'site_content" ORDER BY ordinal_Position');
 while ($row = $modx->db->getRow($res)) {
@@ -206,9 +206,9 @@ $ff = array();
 foreach ($array as $key => $val) {
     if (!empty($cf[$val]['table']) == 'tv') {
         $tv_fields[] = "tv" . $key . ".value as '" . $val . "'";
-        $tv_join[] = "LEFT JOIN " . $modx->getFullTableName('site_tmplvar_contentvalues') . " as tv" . $key . " ON c.id = tv" . $key . ".contentId and tv" . $key . ".tmplvarid = " . $cf[$val]['tmplvarid'];
+        $tv_join[] = "LEFT JOIN " . $modx->getFullTableName('site_tmplvar_contentvalues') . " AS tv" . $key . " ON c.id = tv" . $key . ".contentId AND tv" . $key . ".tmplvarid = " . $cf[$val]['tmplvarid'];
         $ff[] = $val;
-    } else if (!empty($cf[$val])) {
+    } elseif (!empty($cf[$val])) {
         $c_fields[] = 'c.' . $val;
         $ff[] = $val;
     }
@@ -216,14 +216,15 @@ foreach ($array as $key => $val) {
 
 $fa_sql = array_merge($tv_fields, $c_fields);
 
-$fsql = implode(',', $fa_sql);
-if (!array_key_exists('id', $fa_sql)) {
-    $fsql = 'c.id,' . $fsql;
+if (!array_key_exists('c.id', $fa_sql)) {
+    $fa_sql[] = 'c.id';
 }
 
-if (!array_key_exists('deleted', $fa_sql)) {
-    $fsql = 'c.deleted,' . $fsql;
+if (!array_key_exists('c.deleted', $fa_sql)) {
+    $fa_sql[] = 'c.deleted';
 }
+
+$fsql = implode(',', $fa_sql);
 
 if (!empty($_GET['onlyid'])) {
     $onlyid = 'and c.id=' . $_GET['onlyid'];
@@ -235,7 +236,7 @@ if (!empty($_GET['search'])) {
 }
 
 // главный запрос
-$sql = "SELECT SQL_CALC_FOUND_ROWS " . $fsql . " FROM " . $modx->getFullTableName('site_content') . " as c " . implode(' ', $tv_join) . " WHERE c.parent=" . $id . " " . ($onlyid ?? '') . " " . ($search ?? '') . " ORDER BY " . $sorter . " " . $direction . " " . $l;
+$sql = "SELECT SQL_CALC_FOUND_ROWS " . $fsql . " FROM " . $modx->getFullTableName('site_content') . " AS c " . implode(' ', $tv_join) . " WHERE c.parent=" . $id . " " . ($onlyid ?? '') . " " . ($search ?? '') . " ORDER BY " . $sorter . " " . $direction . " " . $l;
 
 $tbl = '<div class="row"><div class="table-responsive"><table class="table data" id="table_doc"><thead><tr class="">';
 

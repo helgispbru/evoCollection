@@ -5,12 +5,12 @@ if (!isset($_SESSION['mgrValidated'])) {
 
 $idsa = array();
 foreach ($configuration as $conf) {
-    if (($conf['type'] == 'ids') and ($conf['value']) and ($conf['show_child'] == 0)) {
+    if (($conf['type'] == 'ids') && ($conf['value']) && ($conf['show_child'] == 0)) {
         $idsa[] = $conf['value'];
     }
 
-    if (($conf['type'] == 'template') and ($conf['value']) and ($conf['show_child'] == 0)) {
-        $idsa[] = $modx->db->getValue('Select GROUP_CONCAT(id) from ' . $modx->getFullTableName('site_content') . ' where template in (' . $conf['value'] . ')');
+    if (($conf['type'] == 'template') && ($conf['value']) && ($conf['show_child'] == 0)) {
+        $idsa[] = $modx->db->getValue('SELECT GROUP_CONCAT(id) FROM ' . $modx->getFullTableName('site_content') . ' WHERE template IN (' . $conf['value'] . ')');
     }
 }
 

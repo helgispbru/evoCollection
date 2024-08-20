@@ -32,31 +32,31 @@ $optArr = array(
     'oncecheckbox' => $lang['checkbox']);
 $optSelect = '';
 foreach ($optArr as $key => $val) {
-    $optSelect .= '<option value=\'' . $key . '\'>' . $val . '</option>';
+    $optSelect .= '<option value="' . $key . '">' . $val . '</option>';
 }
 
 $page .= 'optSelect = "' . $optSelect . '";' . PHP_EOL;
 
 $page .= 'select_doc = "<select name=\'value_row[]\' class=\'inputBox\'>';
-$res = $modx->db->query('SHOW COLUMNS FROM ' . $modx->getFullTableName('site_content') . ' where field!="id"');
+$res = $modx->db->query('SHOW COLUMNS FROM ' . $modx->getFullTableName('site_content') . ' WHERE field!="id"');
 while ($row = $modx->db->getRow($res)) {
-    $page .= '<option value=\'' . $row['Field'] . '\'>' . $row['Field'] . '</option>';
+    $page .= '<option value="' . $row['Field'] . '">' . $row['Field'] . '</option>';
 }
 $page .= '</select>";
 
     select_tv = "<select name=\'value_row[]\' class=\'inputBox\'>';
-$res = $modx->db->query('SELECT DISTINCT(tmplvarid),name,caption,cat.category FROM ' . $modx->getFullTableName('site_tmplvar_templates') . '
-    left join ' . $modx->getFullTableName('site_tmplvars') . ' as vars
+$res = $modx->db->query('SELECT DISTINCT(tmplvarid), name, caption, cat.category FROM ' . $modx->getFullTableName('site_tmplvar_templates') . '
+    left join ' . $modx->getFullTableName('site_tmplvars') . ' AS vars
     on ' . $modx->getFullTableName('site_tmplvar_templates') . '.`tmplvarid` = vars.id
-    left join ' . $modx->getFullTableName('categories') . ' as cat
+    left join ' . $modx->getFullTableName('categories') . ' AS cat
     on cat.id = vars.`category`
     order by `category`,`name`');
-$page .= '<optgroup label=\'' . $lang['not_category'] . '\'>';
+$page .= '<optgroup label="' . $lang['not_category'] . '">';
 
 while ($row = $modx->db->getRow($res)) {
     if (($ortop != $row['category']) && ($row['category'])) {
         $ortop = $row['category'];
-        $page .= '</optgroup><optgroup label=\'' . $row['category'] . '\'>';
+        $page .= '</optgroup><optgroup label="' . $row['category'] . '">';
     }
     if ($row['caption']) {
         $page .= '<option value=\'' . $row['name'] . '\'>' . $row['name'] . ' (' . $row['caption'] . ')</option>';
@@ -111,9 +111,9 @@ if ($action == 'work') {
     $configuration = $_POST;
     unset($configuration['action']);
     if ($configuration['type'] == 'template') {
-        $configuration['value'] = $configuration[template];
+        $configuration['value'] = $configuration['template'];
     } else {
-        $configuration['value'] = $configuration[ids];
+        $configuration['value'] = $configuration['ids'];
     }
 
     unset($configuration['template']);
@@ -217,8 +217,8 @@ if (($idc) or ($action == 'new')) {
     $module .= '><label>' . $lang['value'] . '</label>
         <select name="template" class="inputBox">
         <option value="">' . $lang['not_selected'] . '</option>';
-    $templates = $modx->db->query('Select template.id,templatename,cat.category from ' . $modx->getFullTableName('site_templates') . ' as template
-        left join ' . $modx->getFullTableName('categories') . ' as cat
+    $templates = $modx->db->query('SELECT template.id,templatename,cat.category FROM ' . $modx->getFullTableName('site_templates') . ' AS template
+        left join ' . $modx->getFullTableName('categories') . ' AS cat
         on cat.id = template.`category`
         order by category,templatename');
     $ortop = '';
@@ -412,8 +412,8 @@ if (($idc) or ($action == 'new')) {
         <label>' . $lang['default_template'] . ' <small>(' . $lang['for_new_doc'] . ')</small></label>
         <select name="template_default" class="inputBox">
         <option value="">' . $lang['not_selected'] . '</option>';
-    $templates = $modx->db->query('Select template.id,templatename,cat.category from ' . $modx->getFullTableName('site_templates') . ' as template
-        left join ' . $modx->getFullTableName('categories') . ' as cat
+    $templates = $modx->db->query('SELECT template.id,templatename,cat.category from ' . $modx->getFullTableName('site_templates') . ' AS template
+        left join ' . $modx->getFullTableName('categories') . ' AS cat
         on cat.id = template.`category`
         order by category,templatename');
     $ortop = '';
