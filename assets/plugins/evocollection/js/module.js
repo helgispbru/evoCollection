@@ -10,7 +10,7 @@ $(document).ready(function () {
     });
 
     $('#table_rows').on('click', 'a', function (event) {
-        event.preventDefault;
+        event.preventDefault();
         if ($(this).hasClass('cancel')) $(this).parent().prev().html('<input type="text" maxlength="255" name="value_row[]" value="" class="inputBox" >');
         if ($(this).hasClass('set_doc')) {
             $(this).parent().prev().html(select_doc);

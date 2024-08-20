@@ -10,7 +10,8 @@
  * @internal    @events OnManagerNodePrerender,OnPageNotFound,OnDocFormRender
  * @internal    @modx_category Manager and Admin
  * @author      Alexey Liber
- * @lastupdate  02.03.2018 */
+ * @lastupdate  02.03.2018
+ */
 
 if (isset($_SESSION['mgrValidated'])) {
     if (!file_exists(MODX_BASE_PATH . "assets/plugins/evocollection/config.inc.php")) {

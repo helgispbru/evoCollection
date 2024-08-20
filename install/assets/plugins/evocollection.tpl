@@ -1,4 +1,5 @@
-//<?php
+//
+<?php
 /**
  * evoCollection
  *
@@ -12,7 +13,6 @@
  * @internal    @events OnManagerNodePrerender,OnPageNotFound,OnDocFormRender
  * @internal    @modx_category Manager and Admin
  * @internal    @installset base
- *
  */
 
 require MODX_BASE_PATH.'assets/plugins/evocollection/plugin.ec.php';

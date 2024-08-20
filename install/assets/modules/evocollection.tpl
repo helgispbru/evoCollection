@@ -1,4 +1,5 @@
-// <?php
+//
+<?php
 /**
  * evoCollection
  *
@@ -13,7 +14,6 @@
  * @internal    @modx_category Manager and Admin
  * @internal    @installset base, sample
  * @lastupdate  20/02/2018
- *
  */
 
 include_once(MODX_BASE_PATH.'assets/plugins/evocollection/module.ec.php');
