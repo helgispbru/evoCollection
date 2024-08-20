@@ -39,7 +39,7 @@ $output = '';
 $tid = $modx->db->getValue('SELECT template FROM ' . $modx->getFullTableName('site_content') . ' WHERE id=' . $id);
 
 foreach ($configuration as $key => $conf) {
-    if (($conf['type'] == 'ids') && ($conf['value'])) {
+    if (($conf['type'] == 'ids') && $conf['value']) {
         $arr = explode(',', $conf['value']);
         if (in_array($id, $arr)) {
             if (count($conf['fields'])) {
@@ -58,7 +58,7 @@ foreach ($configuration as $key => $conf) {
             }
         }
     }
-    if (($conf['type'] == 'template') && ($conf['value'])) {
+    if (($conf['type'] == 'template') && $conf['value']) {
         $arr = explode(',', $conf['value']);
         if (in_array($tid, $arr)) {
             if (count($conf['fields'])) {
