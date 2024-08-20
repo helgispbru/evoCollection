@@ -16,9 +16,9 @@ $page = '
     <title>' . $lang['title'] . '</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <script src="media/script/jquery/jquery.min.js" type="text/javascript"></script>
-    <script type="text/javascript" src="media/script/tabpane.js"></script>
-    <script type="text/javascript">';
+    <script type="text/javascript" src="media/script/tabpane.js"></script>';
 
+$optSelect = [];
 $optArr = array(
     'default' => $lang['default'],
     'user' => $lang['user'],
@@ -30,43 +30,48 @@ $optArr = array(
     'richtext' => $lang['text_editor'],
     'select' => $lang['select'],
     'oncecheckbox' => $lang['checkbox']);
-$optSelect = '';
 foreach ($optArr as $key => $val) {
-    $optSelect .= '<option value="' . $key . '">' . $val . '</option>';
+    $optSelect[] = '<option value=\"' . $key . '\">' . $val . '</option>';
 }
+$optSelect = implode('', $optSelect);
 
-$page .= 'optSelect = "' . $optSelect . '";' . PHP_EOL;
+$page .= '<script type="text/javascript">
+const optSelect = "' . $optSelect . '";
+</script>';
 
-$page .= 'select_doc = "<select name=\'value_row[]\' class=\'inputBox\'>';
+$page .= '<script type="text/javascript">
+const select_doc = "<select name=\"value_row[]\" class=\"inputBox\">';
 $res = $modx->db->query('SHOW COLUMNS FROM ' . $modx->getFullTableName('site_content') . ' WHERE field!="id"');
 while ($row = $modx->db->getRow($res)) {
-    $page .= '<option value="' . $row['Field'] . '">' . $row['Field'] . '</option>';
+    $page .= '<option value=\"' . $row['field'] . '\">' . $row['field'] . '</option>';
 }
 $page .= '</select>";
+</script>';
 
-    select_tv = "<select name=\'value_row[]\' class=\'inputBox\'>';
+$page .= '<script type="text/javascript">
+const select_tv = "<select name=\"value_row[]\" class=\"inputBox\">';
 $res = $modx->db->query('SELECT DISTINCT(tmplvarid), name, caption, cat.category FROM ' . $modx->getFullTableName('site_tmplvar_templates') . '
-    left join ' . $modx->getFullTableName('site_tmplvars') . ' AS vars
-    on ' . $modx->getFullTableName('site_tmplvar_templates') . '.`tmplvarid` = vars.id
-    left join ' . $modx->getFullTableName('categories') . ' AS cat
-    on cat.id = vars.`category`
-    order by `category`,`name`');
-$page .= '<optgroup label="' . $lang['not_category'] . '">';
-
+    LEFT JOIN ' . $modx->getFullTableName('site_tmplvars') . ' AS vars
+    ON ' . $modx->getFullTableName('site_tmplvar_templates') . '.`tmplvarid` = vars.id
+    LEFT JOIN ' . $modx->getFullTableName('categories') . ' AS cat
+    ON cat.id = vars.`category`
+    ORDER BY `category`,`name`');
+$page .= '<optgroup label=\"' . $lang['not_category'] . '\">';
 while ($row = $modx->db->getRow($res)) {
     if (($ortop != $row['category']) && ($row['category'])) {
         $ortop = $row['category'];
-        $page .= '</optgroup><optgroup label="' . $row['category'] . '">';
+        $page .= '</optgroup><optgroup label=\"' . $row['category'] . '\">';
     }
     if ($row['caption']) {
-        $page .= '<option value=\'' . $row['name'] . '\'>' . $row['name'] . ' (' . $row['caption'] . ')</option>';
+        $page .= '<option value=\"' . $row['name'] . '\">' . $row['name'] . ' (' . $row['caption'] . ')</option>';
     } else {
-        $page .= '<option value=\'' . $row['name'] . '\'>' . $row['name'] . ' ' . $row['caption'] . '</option>';
+        $page .= '<option value=\"' . $row['name'] . '\">' . $row['name'] . ' ' . $row['caption'] . '</option>';
     }
 }
 $page .= '</optgroup>';
 $page .= '</select>";
 </script>
+
 <script type="text/javascript" src="./../assets/plugins/evocollection/js/module.js"></script>
 
 <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
@@ -218,9 +223,9 @@ if (($idc) or ($action == 'new')) {
         <select name="template" class="inputBox">
         <option value="">' . $lang['not_selected'] . '</option>';
     $templates = $modx->db->query('SELECT template.id,templatename,cat.category FROM ' . $modx->getFullTableName('site_templates') . ' AS template
-        left join ' . $modx->getFullTableName('categories') . ' AS cat
-        on cat.id = template.`category`
-        order by category,templatename');
+        LEFT JOIN ' . $modx->getFullTableName('categories') . ' AS cat
+        ON cat.id = template.`category`
+        ORDER BY category,templatename');
     $ortop = '';
     $module .= '<optgroup label=\'Без категории\'>';
     while ($row = $modx->db->getRow($templates)) {
@@ -413,9 +418,9 @@ if (($idc) or ($action == 'new')) {
         <select name="template_default" class="inputBox">
         <option value="">' . $lang['not_selected'] . '</option>';
     $templates = $modx->db->query('SELECT template.id,templatename,cat.category from ' . $modx->getFullTableName('site_templates') . ' AS template
-        left join ' . $modx->getFullTableName('categories') . ' AS cat
-        on cat.id = template.`category`
-        order by category,templatename');
+        LEFT JOIN ' . $modx->getFullTableName('categories') . ' AS cat
+        ON cat.id = template.`category`
+        ORDER BY category,templatename');
     $ortop = '';
     $module .= '<optgroup label=\'' . $lang['not_category'] . '\'>';
     while ($row = $modx->db->getRow($templates)) {
